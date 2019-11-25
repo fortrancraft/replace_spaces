@@ -16,7 +16,7 @@ script='../replace_spaces.py'
 idx = 0
 for arg_squash in ['', '--squash']:
 
-    for arg_char in ['--char=-', '--char=__']:
+    for arg_rstr in ['--rstr=-', '--rstr=__']:
 
         for arg_verbose in ['', '-v', '-vv']:
 
@@ -35,7 +35,7 @@ for arg_squash in ['', '--squash']:
 
                     cmd = script + ' "' + test_item + '"' + \
                         ' ' + arg_squash + \
-                        ' ' + arg_char + \
+                        ' ' + arg_rstr + \
                         ' ' + arg_verbose + \
                         ' ' + arg_dry_run
 
