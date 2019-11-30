@@ -93,14 +93,22 @@ def ask_rename(input_name, new_path):
     answer : Bool
         True if the input answer is
     """
-    print(' ')
-    print('Replace \n    {}\nwith\n    {}\n?'\
-        .format(input_name, new_path))
-    input_rename_item = input('[yes]/no : ')
-    if input_rename_item.lower() in ['yes', 'y', 'ye', '']:
-        answer = True
-    else:
+    if input_name == new_path:
+        # Don't ask to rename, but state the output is the same as the input.
+        print(' ')
+        print('input_name : {}'.format(input_name))
+        print('new_path   : {}'.format(new_path))
+        print('    --> Output name is the same as the input!')
         answer = False
+    else:
+        print(' ')
+        print('Replace \n    {}\nwith\n    {}\n?'\
+            .format(input_name, new_path))
+        input_rename_item = input('[yes]/no : ')
+        if input_rename_item.lower() in ['yes', 'y', 'ye', '']:
+            answer = True
+        else:
+            answer = False
     return answer
 
 
@@ -186,7 +194,10 @@ def replace_spaces(input_name, rstr='-', squash=True, interactive=False,
     if not dry_run:
         # Check if the input item name is the same as the new (i.e. unchanged).
         if item_name == new_name:
-            print('\n--> New file/dir name matches input name! Exiting...')
+            print(' ')
+            print('item_name : {}'.format(item_name))
+            print('new_name  : {}'.format(new_name))
+            print('--> New file/dir name matches input name!')
             return
 
         # Check if the file/dir exists already to prevent over writing.
