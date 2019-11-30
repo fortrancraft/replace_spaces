@@ -53,15 +53,13 @@ def make_arg_parser():
     return args
 
 
-def is_file_or_dir(item, raise_exception=False):
+def is_file_or_dir(item):
     """Test if an input item is a file or directory.
 
     Parameters
     ----------
     item : str
         file or directory path string
-    raise_exception : Bool
-        if True, then an exception is raised stating the file/dir doesn't exist
 
     Returns
     -------
@@ -69,11 +67,6 @@ def is_file_or_dir(item, raise_exception=False):
     """
     q = os.path.isfile(item) or \
         os.path.isdir(item)
-
-    if raise_exception and not q:
-        msg = 'Input file/directory, "{}" does not exist!'\
-            .format(item)
-        raise FileNotFoundError(msg)
 
     return q
 
@@ -138,8 +131,13 @@ def replace_spaces(input_name, rstr='-', squash=True, interactive=False,
 
     # Make sure the input is a file or dir exists.
     exists = False
-    if is_file_or_dir(input_name, raise_exception=True):
+    if is_file_or_dir(input_name):
         exists = True
+    else:
+        # Return since there is nothing to do.
+        print(' ')
+        print('--> The input file/dir does not exist! Nothing to do...')
+        return
 
     # Split the input_item name into a path, name and extension (if exists).
     item_dir = os.path.dirname(input_name)
@@ -202,8 +200,11 @@ def replace_spaces(input_name, rstr='-', squash=True, interactive=False,
 
         # Check if the file/dir exists already to prevent over writing.
         if is_file_or_dir(new_path):
-            msg = 'new_path = {} alreadys exists!'.format(new_path)
-            raise FileExistsError(msg)
+            # Return since there is nothing to do.
+            print(' ')
+            print('--> The new file/dir path already exists! Nothing to do...')
+            return
+
         else:
             # Move the item in place to the new name and path.
             if interactive:
