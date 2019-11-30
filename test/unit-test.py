@@ -52,3 +52,14 @@ for arg_squash in ['', '--squash']:
                         print(' ')
                         print('##')
                         print('#'*70)
+
+# Test the batch script.
+script='../replace_spaces_batch.py'
+
+dir_work = 'test-examples-batch'
+
+os.system('rm -rf ' + dir_work)
+os.system('cp -r examples ' + dir_work)
+
+cmd = script + ' ' + dir_work + ' --squash -i -w'
+os.system(cmd)
